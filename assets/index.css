@@ -1,0 +1,44 @@
+@import '@cds/core/global.min.css';
+@import '@cds/core/styles/theme.dark.min.css';
+@import '@cds/city/css/bundles/default.min.css';
+
+:root {
+  --cds-global-base: 16;
+}
+
+:not(:defined) {
+  visibility: hidden;
+}
+
+body, h1, h2, h3, h4, h5, h6, p {
+  padding: 0;
+  margin: 0;
+}
+
+main {
+  padding: 36px 24px 36px 64px;
+}
+
+main[expanded] {
+  padding: 36px 24px 24px 280px;
+  z-index: -1;
+}
+
+@media (min-width: 1024px) {
+  body:not([cds-version]) main {
+    padding: 36px 24px 24px 280px;
+    z-index: -1;
+  }
+}
+
+cds-navigation {
+  box-shadow: var(--cds-alias-object-shadow-300);
+  overflow: auto;
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 999;
+}
+
+cds-navigation:not([expanded]) cds-navigation-start svg {
+  display: none;
+}

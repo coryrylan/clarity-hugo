@@ -1,0 +1,28 @@
+{
+  "name": "clarity-hugo",
+  "version": "0.0.0",
+  "description": "Clarity Design System + Hugo Static Site Generator",
+  "main": "index.js",
+  "scripts": {
+    "start": "hugo server -D",
+    "build": "hugo -D",
+    "deploy": "npm run build && firebase deploy"
+  },
+  "keywords": [
+    "clarity",
+    "hugo"
+  ],
+  "author": "Cory Rylan",
+  "license": "MIT",
+  "dependencies": {
+    "@cds/city": "^1.1.0",
+    "@cds/core": "^6.0.0-next.6"
+  },
+  "devDependencies": {
+    "@fullhuman/postcss-purgecss": "^4.1.3",
+    "postcss": "^8.4.7",
+    "postcss-cli": "^9.1.0",
+    "postcss-font-magician": "^3.0.0",
+    "postcss-import": "^14.0.2"
+  }
+}

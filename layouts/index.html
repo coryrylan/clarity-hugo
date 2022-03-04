@@ -1,0 +1,43 @@
+{{ define "main" }}
+
+<h1 cds-text="heading" cds-layout="p-b:xl">Clarity Design System + Hugo</h1>
+
+<div cds-layout="grid gap:lg cols@md:6">
+  {{ $paginator := .Paginate (.Site.RegularPages) }} {{ range $paginator.Pages }}
+  <cds-card>
+    <div cds-layout="vertical gap:md p-y:sm">
+      <h1 cds-text="section"><a cds-text="link" href="{{ .RelPermalink }}">{{ .Title }}</a></h1>
+      <time datetime="{{ .PublishDate }}">{{ i18n "publishDate" . }}</time>
+      <p cds-text="body">{{ .Description | plainify | htmlUnescape }}</p>
+      <a href="{{ .RelPermalink }}" cds-layout="p-t:lg align:right">
+        <cds-button action="outline">Read More</cds-button>
+      </a>
+    </div>
+  </cds-card>
+  {{ end }}
+  
+  {{ if or ($paginator.HasPrev) ($paginator.HasNext) }}
+  <div cds-layout="col:12">
+    <cds-pagination aria-label="pagination">
+      {{ if $paginator.HasPrev }}    
+      <a href="{{.Paginator.First.URL}}"><cds-pagination-button aria-label="go to first" action="first" {{ cond (eq .Paginator.PageNumber 1) "disabled" "" }}></cds-pagination-button></a>
+      <a href="{{.Paginator.Prev.URL}}"><cds-pagination-button aria-label="go to first" action="prev"></cds-pagination-button></a>
+      {{ else }}
+      <cds-pagination-button aria-label="go to first" action="first" disabled></cds-pagination-button>
+      <cds-pagination-button aria-label="go to prev" action="prev" disabled></cds-pagination-button>
+      {{ end }}
+
+      <span aria-label="current page">{{ .Paginator.PageNumber }} / {{ .Paginator.TotalPages }}</span>
+
+      {{ if $paginator.HasNext }}
+      <a  href="{{.Paginator.Next.URL}}"><cds-pagination-button aria-label="go to next" action="next"></cds-pagination-button></a>
+      <a href="{{.Paginator.Last.URL}}"><cds-pagination-button aria-label="go to last" action="last"></cds-pagination-button></a>
+      {{ else }}
+      <cds-pagination-button aria-label="go to next" action="next" disabled></cds-pagination-button>
+      <cds-pagination-button aria-label="go to last" action="last" disabled></cds-pagination-button>
+      {{ end }}
+    </cds-pagination>
+  </div>
+  {{ end }}
+</div>
+{{ end }}

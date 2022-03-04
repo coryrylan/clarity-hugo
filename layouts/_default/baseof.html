@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{{ block "title" . }}{{ with .Params.Title }}{{ . }} | {{ end }}{{ .Site.Title }}{{ end }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Example site of Clarity Design System and Hugo">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    {{ $options := dict "config" "postcss.config.js" "noMap" true }}
+    {{ $style := resources.Get "index.css" | resources.PostCSS $options | resources.Minify }}
+    <style>{{ $style.Content | safeCSS }}</style>
+  </head>
+  <body cds-text="body" cds-theme="dark">
+    <cds-navigation role="list" expanded>
+      <cds-navigation-start>
+        <div cds-layout="horizontal align:vertical-center p-x:xs" style="max-width: 40px">
+          <svg width="25" height="25"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cds-svg"></use></svg>
+        </div>
+      </cds-navigation-start>
+      <cds-navigation-item>
+        <a href="/">
+          <cds-icon shape="search"></cds-icon> Posts
+        </a>
+      </cds-navigation-item>
+      <cds-navigation-item>
+        <a href="/about"><cds-icon shape="info-standard"></cds-icon> About</a>
+      </cds-navigation-item>
+      <cds-navigation-item>
+        <a href="https://clarity.design/storybook/core"><cds-icon shape="search"></cds-icon> Documentation</a>
+      </cds-navigation-item>
+      <cds-navigation-item>
+        <a href="https://cds.wtf" target="_blank" rel="noopener">
+          <cds-icon shape="code" inner-offset="4"></cds-icon> Demos</cds-icon>
+        </a>
+      </cds-navigation-item>
+      <cds-navigation-item slot="cds-navigation-end">
+        <button id="settings-button"><cds-icon shape="cog"></cds-icon> Settings</button>
+      </cds-navigation-item>
+    </cds-navigation>
+    <main cds-layout="container:xl">
+      {{ block "main" . }}{{ end }}
+    </main>
+    <cds-modal hidden>
+      <cds-modal-header>
+        <h3 cds-text="title">Settings</h3>
+      </cds-modal-header>
+      <cds-modal-content>
+        <section cds-layout="vertical gap:lg m-b:lg">
+          <cds-toggle>
+            <label>Dark Theme</label>
+            <input type="checkbox" id="dark-theme-toggle" />
+          </cds-toggle>
+        </section>
+      </cds-modal-content>
+    </cds-modal>
+
+    {{- $options := dict "targetPath" "js/bundle.js" -}}
+    {{- $jsBundle := resources.Get "index.js" | js.Build $options | resources.Minify | fingerprint -}}
+    <script src="{{ $jsBundle.RelPermalink }}" integrity="{{ $jsBundle.Data.Integrity }}" defer></script>
+  </body>
+</html>

@@ -1,0 +1,5 @@
+baseURL = 'http://example.org/'
+languageCode = 'en-us'
+title = 'Clarity Design System + Hugo'
+paginate = 6
+staticDir = ['static', 'node_modules/@cds/city']
